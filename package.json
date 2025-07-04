@@ -1,8 +1,10 @@
 {
-  "name": "launchpad-sdk",
-  "module": "index.ts",
+  "name": "@hokko_io/launchpad",
+  "module": "./src/index.ts",
+  "description": "Launchpad SDK on Sui for Hokko",
   "type": "module",
-  "private": true,
+  "version": "0.1.2",
+  "private": false,
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -12,5 +14,13 @@
   "dependencies": {
     "@mysten/sui": "^1.35.0",
     "axios": "^1.10.0"
-  }
+  },
+  "author": "Reblixt",
+  "license": "MIT",
+  "keywords": [
+    "sui",
+    "hokko",
+    "sdk",
+    "launchpad"
+  ]
 }

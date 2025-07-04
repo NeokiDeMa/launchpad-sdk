@@ -1,7 +1,7 @@
 // import type { SuiClient } from "@mysten/sui/client";
 import type { Transaction } from "@mysten/sui/transactions";
 import { Marketplace_findLaunchpadBySdk } from "../orval/src/marketplace/marketplace";
-import type { LaunchpadCollection } from "../orval/src/model";
+import type { LaunchpadCollection } from "../orval/src/model/launchpadCollection";
 import { Call, LANCHPAD_PACKAGE_ID, Module, StaticObjects } from "./constants";
 import type {
 	CustomPhaseArgs,
@@ -11,9 +11,9 @@ import type {
 	SetupLaunchArgs,
 	SetupWhiteistArgs,
 	WhiteListArgs,
-} from "./type";
+} from "./types";
 
-export class launchpadSDK {
+export class LaunchpadSDK {
 	async getLaunchpadData(type: string): Promise<LaunchpadCollection> {
 		try {
 			const response = await Marketplace_findLaunchpadBySdk({ type });

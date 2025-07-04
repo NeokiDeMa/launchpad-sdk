@@ -6,17 +6,12 @@ A TypeScript SDK for creating and managing NFT launchpads on the Sui blockchain.
 
 - [Installation](#installation)
 - [Prerequisites](#prerequisites)
-<!-- - [Quick Start](#quick-start) -->
-<!-- - [API Reference](#api-reference) -->
 - [Examples](#examples)
-<!-- - [Error Handling](#error-handling) -->
-<!-- - [Transaction Execution](#transaction-execution) -->
 
 ## Installation
 
 ```bash
-npm install @mysten/sui axios
-# Add your SDK package here
+npm install @hokko_io/launchpad @mysten/sui axios
 ```
 
 ## Prerequisites
@@ -29,12 +24,12 @@ Before using the LaunchpadSDK, ensure you have:
 ## Quick Start
 
 ```typescript
-import { launchpadSDK } from "./client";
+import { LaunchpadSDK } from "./client";
 import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 
 // Initialize SDK and client
-const sdk = new launchpadSDK();
+const sdk = new LaunchpadSDK();
 const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
 
 // Your NFT type
@@ -58,7 +53,7 @@ Sets up whitelist addresses and allocations (must be called after setupLaunchpad
 Mints/create NFTs from your collection and return them as Arguments.
 
 #### `withdraw(args: WithdrawArgs): Promise<Transaction>`
-Withdraws accumulated SUI tokens from the launchpad.
+Withdraws accumulated SUI tokens from the launchpad and sends to the caller.
 
 ## Examples
 
@@ -66,12 +61,12 @@ Withdraws accumulated SUI tokens from the launchpad.
 
 ```typescript
 import { Transaction } from "@mysten/sui/transactions";
-import { launchpadSDK } from "./client";
+import { LaunchpadSDK } from "./client";
 import { SuiClient } from "@mysten/sui/client";
 import type { SetupLaunchArgs } from "./type";
 
 async function createLaunchpad() {
-    const sdk = new launchpadSDK();
+    const sdk = new LaunchpadSDK();
     const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
     const tx = new Transaction();
 
@@ -101,10 +96,10 @@ async function createLaunchpad() {
         console.log("Transaction block created:", resultTx.serialize());
         
         // Execute transaction with mutation handling
-        const result = await executeTransaction(resultTx, client);
-        console.log("Setup Launchpad Transaction executed:", result);
-        
-        return result;
+        client.executeTransactionBlock({
+            signature, 
+            transactionBlock: resultTx
+        })
     } catch (error) {
         console.error("Error setting up launchpad:", error);
         throw error;
@@ -116,7 +111,7 @@ async function createLaunchpad() {
 
 ```typescript
 async function retrieveLaunchpadData() {
-    const sdk = new launchpadSDK();
+    const sdk = new LaunchpadSDK();
     const nftType = "YOUR_PACKAGE_ID::YOUR_MODULE_NAME::YOUR_STRUCT_NAME";
 
     try {
@@ -124,13 +119,6 @@ async function retrieveLaunchpadData() {
         console.log("Launchpad Collection Data:", launchpadData);
         
         // Extract important IDs for future operations
-        const { launchCollectionId, creatorCapId } = launchpadData;
-        
-        if (!launchCollectionId || !creatorCapId) {
-            throw new Error("Missing required launchpad data fields");
-        }
-        
-        return { launchCollectionId, creatorCapId, launchpadData };
     } catch (error) {
         console.error("Error retrieving launchpad data:", error);
         throw error;
@@ -145,7 +133,7 @@ async function setupWhitelistExample(
     launchCollectionId: string,
     creatorCapId: string,
 ) {
-    const sdk = new launchpadSDK();
+    const sdk = new LaunchpadSDK();
     const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
     const tx = new Transaction();
 
@@ -160,14 +148,12 @@ async function setupWhitelistExample(
             allocations: allocationsForAddresses,
             tx,
         });
-        
-        console.log("Whitelist transaction created:", resultTx.serialize());
-        
+              
         // Execute transaction with mutation handling
-        const result = await executeTransaction(resultTx, client);
-        console.log("Setup Whitelist Transaction executed:", result);
-        
-        return result;
+      client.executeTransactionBlock({
+        signature, 
+        transactionBlock: resultTx
+      })
     } catch (error) {
         console.error("Error setting up whitelist:", error);
         throw error;
@@ -182,32 +168,41 @@ async function mintExample(
     launchCollectionId: string,
     nftType: string,
 ) {
-    const sdk = new launchpadSDK();
+    const sdk = new LaunchpadSDK();
     const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
     const tx = new Transaction();
 
-    // Pre-created NFT object IDs
-    const preCreatedNftObjectIds = ["0xnft_obj_id_1", "0xnft_obj_id_2"];
-    
-    // SUI payment coin object IDs
-    const suiPaymentCoinObjectIds = ["0xsui_coin_id_1"];
+    // Exapmle of a NFT creating call
+    const [nft] = tx.moveCall({
+        target: 'YOUR_PACKAGE_ID::YOUR_MODULE_NAME::create_nft',
+        arguments: [
+            tx.pure("My NFT Name"),
+            tx.pure("My NFT Description"),
+            tx.pure("https://example.com/nft-image.png"),
+        ],
+        typeArguments: [ nftType ],
+    })
+
+    const [coin] = tx.splitCoins(
+        tx.gas,
+        [tx.pure(1000000000)] // Split 1 SUI (1,000,000,000 MIST)
+    );
 
     try {
         const resultTx = await sdk.mint({
             launchCollectionId,
-            Nfts: preCreatedNftObjectIds,
-            suiTokens: suiPaymentCoinObjectIds,
+            Nfts: [nft],
+            suiTokens: [coin],
             type: nftType,
             tx,
         });
         
-        console.log("Mint transaction created:", resultTx.serialize());
         
         // Execute transaction with mutation handling
-        const result = await executeTransaction(resultTx, client);
-        console.log("Mint Transaction executed:", result);
-        
-        return result;
+      client.executeTransactionBlock({
+        signature, 
+        transactionBlock: resultTx
+      })
     } catch (error) {
         console.error("Error minting NFTs:", error);
         throw error;
@@ -222,24 +217,25 @@ async function withdrawExample(
     launchCollectionId: string,
     creatorCapId: string,
 ) {
-    const sdk = new launchpadSDK();
+    const sdk = new LaunchpadSDK();
     const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
     const tx = new Transaction();
 
     try {
+        // This returns the transaction
+        // The Sui token is sent automaticlly to the caller with the creator cap
         const resultTx = await sdk.withdraw({
             launchCollectionId,
             creatorCap: creatorCapId,
             tx,
         });
-        
-        console.log("Withdraw transaction created:", resultTx.serialize());
-        
+              
         // Execute transaction with mutation handling
-        const result = await executeTransaction(resultTx, client);
-        console.log("Withdraw Transaction executed:", result);
         
-        return result;
+      client.executeTransactionBlock({
+        signature, 
+        transactionBlock: resultTx
+      })
     } catch (error) {
         console.error("Error withdrawing SUI:", error);
         throw error;
@@ -247,266 +243,3 @@ async function withdrawExample(
 }
 ```
 
-## Transaction Execution
-
-### Complete Transaction Execution with Mutation Handling
-
-```typescript
-import { SuiClient } from "@mysten/sui/client";
-import { Transaction } from "@mysten/sui/transactions";
-import { SuiTransactionResponse } from "@mysten/sui/client";
-
-// Transaction execution utility with mutation handling
-async function executeTransaction(
-    transactionBlock: Transaction,
-    client: SuiClient,
-    wallet?: any // Your wallet instance
-): Promise<SuiTransactionResponse> {
-    try {
-        if (!wallet) {
-            throw new Error("Wallet is required for transaction execution");
-        }
-
-        console.log("Signing transaction...");
-        const signedTx = await wallet.signTransaction({ 
-            transactionBlock 
-        });
-
-        console.log("Executing transaction...");
-        const response = await client.executeTransaction({
-            transactionBlock: signedTx.transactionBlockBytes,
-            signature: signedTx.signature,
-            options: { 
-                showEffects: true,
-                showEvents: true,
-                showObjectChanges: true,
-                showBalanceChanges: true,
-            },
-        });
-
-        console.log("Transaction executed successfully:", response.digest);
-        
-        // Handle transaction mutations
-        await handleTransactionMutations(response, client);
-        
-        return response;
-    } catch (error) {
-        console.error("Transaction execution failed:", error);
-        throw error;
-    }
-}
-
-// Mutation handling for finalized transactions
-async function handleTransactionMutations(
-    response: SuiTransactionResponse,
-    client: SuiClient
-) {
-    try {
-        // Check if transaction was successful
-        if (response.effects?.status?.status !== "success") {
-            console.error("Transaction failed:", response.effects?.status?.error);
-            return;
-        }
-
-        console.log("🎉 Transaction finalized successfully!");
-        console.log("Transaction digest:", response.digest);
-
-        // Handle object changes (mutations)
-        if (response.objectChanges) {
-            console.log("📋 Object Changes:");
-            response.objectChanges.forEach((change, index) => {
-                console.log(`  ${index + 1}. Type: ${change.type}`);
-                
-                if (change.type === "created") {
-                    console.log(`     🆕 Created object: ${change.objectId}`);
-                    console.log(`     📦 Object type: ${change.objectType}`);
-                }
-                
-                if (change.type === "mutated") {
-                    console.log(`     🔄 Mutated object: ${change.objectId}`);
-                    console.log(`     📦 Object type: ${change.objectType}`);
-                }
-                
-                if (change.type === "deleted") {
-                    console.log(`     🗑️ Deleted object: ${change.objectId}`);
-                }
-            });
-        }
-
-        // Handle balance changes
-        if (response.balanceChanges) {
-            console.log("💰 Balance Changes:");
-            response.balanceChanges.forEach((change, index) => {
-                console.log(`  ${index + 1}. Owner: ${change.owner}`);
-                console.log(`     Amount: ${change.amount}`);
-                console.log(`     Coin Type: ${change.coinType}`);
-            });
-        }
-
-        // Handle events
-        if (response.events) {
-            console.log("📡 Events Emitted:");
-            response.events.forEach((event, index) => {
-                console.log(`  ${index + 1}. Type: ${event.type}`);
-                console.log(`     Parsed JSON:`, event.parsedJson);
-            });
-        }
-
-        // Additional mutation handling based on transaction type
-        await handleSpecificMutations(response, client);
-
-    } catch (error) {
-        console.error("Error handling transaction mutations:", error);
-    }
-}
-
-// Handle specific mutations based on transaction type
-async function handleSpecificMutations(
-    response: SuiTransactionResponse,
-    client: SuiClient
-) {
-    try {
-        // Extract created objects that might be launchpad collections
-        const createdObjects = response.objectChanges?.filter(
-            change => change.type === "created"
-        );
-
-        if (createdObjects && createdObjects.length > 0) {
-            console.log("🔍 Analyzing created objects...");
-            
-            for (const obj of createdObjects) {
-                if (obj.type === "created") {
-                    // Check if this is a launchpad collection
-                    if (obj.objectType.includes("LaunchpadCollection")) {
-                        console.log("🚀 New LaunchpadCollection created!");
-                        console.log("   Collection ID:", obj.objectId);
-                        
-                        // Store the collection ID for future use
-                        await storeLaunchpadCollectionId(obj.objectId);
-                    }
-                    
-                    // Check if this is a creator capability
-                    if (obj.objectType.includes("CreatorCap")) {
-                        console.log("👑 Creator capability created!");
-                        console.log("   Creator Cap ID:", obj.objectId);
-                        
-                        // Store the creator cap ID for future use
-                        await storeCreatorCapId(obj.objectId);
-                    }
-                }
-            }
-        }
-
-        // Handle minted NFTs
-        const mintedNFTs = response.events?.filter(
-            event => event.type.includes("MintEvent")
-        );
-
-        if (mintedNFTs && mintedNFTs.length > 0) {
-            console.log("🎨 NFTs minted successfully!");
-            mintedNFTs.forEach((event, index) => {
-                console.log(`   ${index + 1}. Event:`, event.parsedJson);
-            });
-        }
-
-    } catch (error) {
-        console.error("Error handling specific mutations:", error);
-    }
-}
-
-// Utility functions for storing important IDs
-async function storeLaunchpadCollectionId(collectionId: string) {
-    // Store in your preferred storage (database, localStorage, etc.)
-    console.log("📝 Storing launchpad collection ID:", collectionId);
-    // Implementation depends on your storage solution
-}
-
-async function storeCreatorCapId(creatorCapId: string) {
-    // Store in your preferred storage (database, localStorage, etc.)
-    console.log("📝 Storing creator cap ID:", creatorCapId);
-    // Implementation depends on your storage solution
-}
-```
-
-## Error Handling
-
-```typescript
-// Comprehensive error handling wrapper
-async function safeExecuteTransaction(
-    transactionFn: () => Promise<Transaction>,
-    client: SuiClient,
-    wallet: any,
-    operationName: string
-) {
-    try {
-        const tx = await transactionFn();
-        const result = await executeTransaction(tx, client, wallet);
-        console.log(`✅ ${operationName} completed successfully`);
-        return result;
-    } catch (error) {
-        console.error(`❌ ${operationName} failed:`, error);
-        
-        // Handle specific error types
-        if (error instanceof Error) {
-            if (error.message.includes("Insufficient funds")) {
-                console.error("💸 Insufficient funds for transaction");
-            } else if (error.message.includes("Object not found")) {
-                console.error("🔍 Required object not found");
-            } else if (error.message.includes("Transaction rejected")) {
-                console.error("🚫 Transaction was rejected");
-            }
-        }
-        
-        throw error;
-    }
-}
-
-// Usage example
-async function safeMint() {
-    const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
-    
-    await safeExecuteTransaction(
-        () => sdk.mint({ /* mint args */ }),
-        client,
-        wallet,
-        "NFT Minting"
-    );
-}
-```
-
-## Complete Workflow Example
-
-```typescript
-async function completeWorkflow() {
-    const sdk = new launchpadSDK();
-    const client = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
-    const nftType = "YOUR_PACKAGE_ID::YOUR_MODULE_NAME::YOUR_STRUCT_NAME";
-
-    try {
-        // Step 1: Setup launchpad
-        console.log("🚀 Setting up launchpad...");
-        await createLaunchpad();
-
-        // Step 2: Retrieve launchpad data
-        console.log("📊 Retrieving launchpad data...");
-        const { launchCollectionId, creatorCapId } = await retrieveLaunchpadData();
-
-        // Step 3: Setup whitelist
-        console.log("📋 Setting up whitelist...");
-        await setupWhitelistExample(launchCollectionId, creatorCapId);
-
-        // Step 4: Mint NFTs
-        console.log("🎨 Minting NFTs...");
-        await mintExample(launchCollectionId, nftType);
-
-        // Step 5: Withdraw funds
-        console.log("💰 Withdrawing funds...");
-        await withdrawExample(launchCollectionId, creatorCapId);
-
-        console.log("✅ Complete workflow executed successfully!");
-
-    } catch (error) {
-        console.error("❌ Workflow failed:", error);
-    }
-}
-```
