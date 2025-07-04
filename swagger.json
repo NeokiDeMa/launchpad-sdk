@@ -1,0 +1,2029 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/nft/{address}": {
+      "get": {
+        "operationId": "NftController_One",
+        "parameters": [
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found Nft by address.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Nft"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Nft"
+        ]
+      }
+    },
+    "/nft/type": {
+      "put": {
+        "operationId": "NftController_ManyByType",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindManyNftInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found NFTs by type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nft"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Nft"
+        ]
+      }
+    },
+    "/nft/attribute": {
+      "put": {
+        "operationId": "NftController_Attributes",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindNftsByAttributesInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found NFTs by attributes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nft"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Nft"
+        ]
+      }
+    },
+    "/nft/activity": {
+      "put": {
+        "operationId": "NftController_Activity",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindNftActivityInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found NFT activity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NftEvent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Nft"
+        ]
+      }
+    },
+    "/nft/activity/many": {
+      "put": {
+        "operationId": "NftController_ManyByActivity",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindManyNftActivityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found many NFT activities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NftEvent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Nft"
+        ]
+      }
+    },
+    "/collection": {
+      "get": {
+        "operationId": "CollectionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully found all collections.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Collection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Collection"
+        ]
+      }
+    },
+    "/collection/search/{name}": {
+      "get": {
+        "operationId": "CollectionController_Search",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found collection by name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Collection"
+        ]
+      }
+    },
+    "/collection/type": {
+      "put": {
+        "operationId": "CollectionController_Stats",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindCollectionByTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found collection by type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Collection"
+        ]
+      }
+    },
+    "/collection/condition": {
+      "put": {
+        "operationId": "CollectionController_findByCondition",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindManyCollectionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Collection"
+        ]
+      }
+    },
+    "/wallet/{address}": {
+      "get": {
+        "operationId": "WalletController_find",
+        "parameters": [
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found wallet by address.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Wallet"
+        ]
+      }
+    },
+    "/wallet/{address}/activity": {
+      "get": {
+        "operationId": "WalletController_findActivity",
+        "parameters": [
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found wallet activity by address.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NftEvent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Wallet"
+        ]
+      }
+    },
+    "/marketplace/listing": {
+      "put": {
+        "operationId": "MarketplaceController_findListing",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindListingsByIdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found listing by ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/listings/many": {
+      "put": {
+        "operationId": "MarketplaceController_findManyListings",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindListingsByTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found listings by type or all listings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Collection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/offers/id": {
+      "put": {
+        "operationId": "MarketplaceController_findOffers",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindOneOfferByIdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found offer by ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/offers/token": {
+      "put": {
+        "operationId": "MarketplaceController_findOfferByTokenId",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindOneOfferByTokenIdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found offer by token ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/offers/many": {
+      "put": {
+        "operationId": "MarketplaceController_findManyOffers",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindManyOffersDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found offers by type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Offer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/collection-offers": {
+      "put": {
+        "operationId": "MarketplaceController_findCollectionOffers",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindCollectionOffersDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found collection offers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionOffer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/launchpad": {
+      "put": {
+        "operationId": "MarketplaceController_findAllLaunchpads",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully found all launchpads.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LaunchpadCollection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/launchpad/one": {
+      "put": {
+        "operationId": "MarketplaceController_findLaunchpadOne",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchpadFindByDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found launchpad by ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchpadCollection"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/launchpad/phase": {
+      "put": {
+        "operationId": "MarketplaceController_findLaunchpadByPhase",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchpadPhaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found launchpads by phase.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LaunchpadCollection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/launchpad/state": {
+      "put": {
+        "operationId": "MarketplaceController_findLaunchpadByState",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchpadCollectionStateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found launchpads by state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LaunchpadCollection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    },
+    "/marketplace/launchpad/sdk": {
+      "put": {
+        "operationId": "MarketplaceController_findLaunchpadBySdk",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchpadFindByDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found launchpad by SDK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchpadCollection"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Marketplace"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Indexer API",
+    "description": "The Querys for the NFT Indexer",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "indexer",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "Offer": {
+        "type": "object",
+        "properties": {
+          "collectionType": {
+            "type": "string"
+          },
+          "kiosk": {
+            "type": "string"
+          },
+          "offerId": {
+            "type": "string"
+          },
+          "offerCap": {
+            "type": "string"
+          },
+          "tokenId": {
+            "type": "string"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "marketplaceFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "royaltyFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ownerWalletAddress": {
+            "type": "string"
+          },
+          "kioskStandard": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "nftId": {
+            "type": "string"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/Wallet"
+          },
+          "nft": {
+            "$ref": "#/components/schemas/Nft"
+          }
+        },
+        "required": [
+          "collectionType",
+          "kiosk",
+          "offerId",
+          "offerCap",
+          "tokenId",
+          "price",
+          "marketplaceFee",
+          "royaltyFee",
+          "ownerWalletAddress",
+          "kioskStandard",
+          "createdAt",
+          "updatedAt",
+          "owner",
+          "nft"
+        ]
+      },
+      "Collection": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "volume": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "bannerUrl": {
+            "type": "string"
+          },
+          "CollectionOffer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CollectionOffer"
+            }
+          },
+          "nfts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Nft"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "description",
+          "imageUrl",
+          "verified",
+          "volume",
+          "createdAt",
+          "updatedAt",
+          "CollectionOffer",
+          "nfts"
+        ]
+      },
+      "CollectionOffer": {
+        "type": "object",
+        "properties": {
+          "collectionType": {
+            "type": "string"
+          },
+          "kiosk": {
+            "type": "string"
+          },
+          "offerId": {
+            "type": "string"
+          },
+          "offerCap": {
+            "type": "string"
+          },
+          "policyId": {
+            "type": "string"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "marketplaceFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "royaltyFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ownerWalletAddress": {
+            "type": "string"
+          },
+          "kioskStandard": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "collection": {
+            "$ref": "#/components/schemas/Collection"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "required": [
+          "collectionType",
+          "kiosk",
+          "offerId",
+          "offerCap",
+          "policyId",
+          "price",
+          "marketplaceFee",
+          "royaltyFee",
+          "ownerWalletAddress",
+          "kioskStandard",
+          "createdAt",
+          "collection",
+          "owner"
+        ]
+      },
+      "Kiosk": {
+        "type": "object",
+        "properties": {
+          "kioskOwnercap": {
+            "type": "string"
+          },
+          "kiosk": {
+            "type": "string"
+          },
+          "personal": {
+            "type": "boolean"
+          },
+          "ownerWalletAddress": {
+            "type": "string"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "required": [
+          "kioskOwnercap",
+          "kiosk",
+          "personal",
+          "ownerWalletAddress",
+          "owner"
+        ]
+      },
+      "NftEvent": {
+        "type": "object",
+        "properties": {
+          "collectionType": {
+            "type": "string"
+          },
+          "tokenId": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "marketplaceFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "royaltyFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "description": {
+            "type": "object"
+          },
+          "sender": {
+            "type": "string"
+          },
+          "reciever": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "walletReciever": {
+            "$ref": "#/components/schemas/Wallet"
+          },
+          "walletSender": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "required": [
+          "collectionType",
+          "tokenId",
+          "digest",
+          "sender",
+          "type",
+          "createdAt",
+          "walletSender"
+        ]
+      },
+      "LaunchpadCollection": {
+        "type": "object",
+        "properties": {
+          "launchId": {
+            "type": "string"
+          },
+          "collectionType": {
+            "type": "string"
+          },
+          "creatorCap": {
+            "type": "string"
+          },
+          "native": {
+            "type": "boolean"
+          },
+          "kioskStandard": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "supply": {
+            "type": "string"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "maxItemPerAddress": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "whiteListEnabled": {
+            "type": "boolean"
+          },
+          "whiteListStartTime": {
+            "type": "string"
+          },
+          "whiteListPrice": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "whiteListSupply": {
+            "type": "string"
+          },
+          "whiteListAddresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WhiteListAddress"
+            }
+          },
+          "customEnabled": {
+            "type": "boolean"
+          },
+          "customName": {
+            "type": "string"
+          },
+          "customStartTime": {
+            "type": "string"
+          },
+          "customPrice": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "customSupply": {
+            "type": "string"
+          },
+          "mintCount": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "launchId",
+          "collectionType",
+          "creatorCap",
+          "native",
+          "kioskStandard",
+          "name",
+          "description",
+          "supply",
+          "price",
+          "maxItemPerAddress",
+          "startTime",
+          "whiteListEnabled",
+          "whiteListStartTime",
+          "whiteListPrice",
+          "whiteListSupply",
+          "whiteListAddresses",
+          "customEnabled",
+          "customName",
+          "customStartTime",
+          "customPrice",
+          "customSupply",
+          "mintCount",
+          "state",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "WhiteListAddress": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "allocation": {
+            "type": "number"
+          },
+          "launchId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "launchpadCollection": {
+            "$ref": "#/components/schemas/LaunchpadCollection"
+          },
+          "wallet": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "required": [
+          "address",
+          "allocation",
+          "launchId",
+          "launchpadCollection"
+        ]
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "personalFee": {
+            "type": "number"
+          },
+          "listings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Listing"
+            }
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Offer"
+            }
+          },
+          "collectionOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CollectionOffer"
+            }
+          },
+          "kiosks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kiosk"
+            }
+          },
+          "nfts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Nft"
+            }
+          },
+          "nftEventsSender": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NftEvent"
+            }
+          },
+          "nftEventsReciever": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NftEvent"
+            }
+          },
+          "whietListAddresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WhiteListAddress"
+            }
+          }
+        },
+        "required": [
+          "address",
+          "listings",
+          "offers",
+          "collectionOffers",
+          "kiosks",
+          "nfts",
+          "nftEventsSender",
+          "nftEventsReciever",
+          "whietListAddresses"
+        ]
+      },
+      "Listing": {
+        "type": "object",
+        "properties": {
+          "collectionType": {
+            "type": "string"
+          },
+          "kiosk": {
+            "type": "string"
+          },
+          "kioskOwnerCap": {
+            "type": "string"
+          },
+          "sharedPurchaseCap": {
+            "type": "string"
+          },
+          "tokenId": {
+            "type": "string"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "marketplaceFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "royaltyFee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ownerWalletAddress": {
+            "type": "string"
+          },
+          "kioskStandard": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/Wallet"
+          },
+          "nft": {
+            "$ref": "#/components/schemas/Nft"
+          }
+        },
+        "required": [
+          "collectionType",
+          "kiosk",
+          "kioskOwnerCap",
+          "sharedPurchaseCap",
+          "tokenId",
+          "price",
+          "marketplaceFee",
+          "royaltyFee",
+          "ownerWalletAddress",
+          "kioskStandard",
+          "createdAt",
+          "updatedAt",
+          "owner",
+          "nft"
+        ]
+      },
+      "StaticNftAttribute": {
+        "type": "object",
+        "properties": {
+          "nftTokenId": {
+            "type": "string"
+          },
+          "collectionType": {
+            "type": "string"
+          },
+          "traitType": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "rarity": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "baseNft": {
+            "$ref": "#/components/schemas/Nft"
+          }
+        },
+        "required": [
+          "nftTokenId",
+          "collectionType",
+          "traitType",
+          "value",
+          "createdAt",
+          "updatedAt",
+          "baseNft"
+        ]
+      },
+      "Nft": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "rarity": {
+            "type": "string"
+          },
+          "rarityScore": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "kiosk": {
+            "type": "string"
+          },
+          "holder": {
+            "type": "string"
+          },
+          "digests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "volume": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "walletAddress": {
+            "type": "string"
+          },
+          "dynamicAttribute": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DynamicNftAttribute"
+            }
+          },
+          "listing": {
+            "$ref": "#/components/schemas/Listing"
+          },
+          "collection": {
+            "$ref": "#/components/schemas/Collection"
+          },
+          "wallet": {
+            "$ref": "#/components/schemas/Wallet"
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Offer"
+            }
+          },
+          "staticAttribute": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaticNftAttribute"
+            }
+          }
+        },
+        "required": [
+          "tokenId",
+          "type",
+          "name",
+          "imageUrl",
+          "metadata",
+          "rarity",
+          "description",
+          "kiosk",
+          "holder",
+          "digests",
+          "createdAt",
+          "updatedAt",
+          "volume",
+          "dynamicAttribute",
+          "collection",
+          "offers",
+          "staticAttribute"
+        ]
+      },
+      "DynamicNftAttribute": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string"
+          },
+          "nftTokenId": {
+            "type": "string"
+          },
+          "collectionType": {
+            "type": "string"
+          },
+          "traitType": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "equipped": {
+            "type": "boolean"
+          },
+          "equippedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "rarity": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "attributeType": {
+            "type": "string"
+          },
+          "baseNft": {
+            "$ref": "#/components/schemas/Nft"
+          }
+        },
+        "required": [
+          "tokenId",
+          "nftTokenId",
+          "collectionType",
+          "traitType",
+          "value",
+          "equipped",
+          "name",
+          "imageUrl",
+          "createdAt",
+          "updatedAt",
+          "attributeType",
+          "baseNft"
+        ]
+      },
+      "FindManyNftInputDto": {
+        "type": "object",
+        "properties": {
+          "basic": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "listings": {
+                "type": "boolean"
+              },
+              "offers": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "skip": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "type",
+              "listings",
+              "offers"
+            ],
+            "description": "Find many NFTs parameters",
+            "example": {
+              "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+              "listings": true,
+              "offers": false,
+              "limit": 20,
+              "skip": 0
+            }
+          },
+          "orderBy": {}
+        },
+        "required": [
+          "basic"
+        ],
+        "description": "Find many NFTs input with ordering"
+      },
+      "FindNftsByAttributesInputDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "value"
+              ],
+              "description": "NFT attribute",
+              "example": {
+                "key": "color",
+                "value": "blue"
+              }
+            }
+          }
+        },
+        "required": [
+          "type",
+          "attributes"
+        ],
+        "description": "Find NFTs by attributes input",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+          "attributes": [
+            {
+              "key": "color",
+              "value": "blue"
+            },
+            {
+              "key": "rarity",
+              "value": "rare"
+            }
+          ]
+        }
+      },
+      "FindNftActivityInputDto": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string",
+            "enum": [
+              "transfer",
+              "purchase",
+              "listing",
+              "delist",
+              "offer",
+              "mint",
+              "burn",
+              "offerAccepted",
+              "mint_owner_not_found",
+              "ownership_error",
+              "offerDeclined",
+              "offerRevoked",
+              "collectionOfferAccepted",
+              "other"
+            ],
+            "description": "NFT activity type",
+            "example": "transfer"
+          }
+        },
+        "required": [
+          "tokenId"
+        ],
+        "description": "Find NFT activity input parameters",
+        "example": {
+          "tokenId": "0x123...",
+          "query": "transfer"
+        }
+      },
+      "FindManyNftActivityDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 150
+          },
+          "skip": {
+            "type": "number",
+            "minimum": 0
+          },
+          "activityType": {
+            "type": "string",
+            "enum": [
+              "transfer",
+              "purchase",
+              "listing",
+              "delist",
+              "offer",
+              "mint",
+              "burn",
+              "offerAccepted",
+              "mint_owner_not_found",
+              "ownership_error",
+              "offerDeclined",
+              "offerRevoked",
+              "collectionOfferAccepted",
+              "other"
+            ],
+            "description": "NFT activity type",
+            "example": "transfer"
+          },
+          "orderBy": {}
+        },
+        "required": [
+          "type"
+        ],
+        "description": "Find many NFT activities parameters",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+          "limit": 20,
+          "skip": 0,
+          "activityType": "transfer"
+        }
+      },
+      "FindCollectionByTypeDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "description": "Find collection by type",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet"
+        }
+      },
+      "CollectionResponseDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "volume": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "bannerUrl": {
+            "type": "string"
+          },
+          "_count": {
+            "type": "object",
+            "properties": {
+              "nfts": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "nfts"
+            ]
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "balance": {
+                "type": "string"
+              },
+              "percentage": {
+                "type": "number"
+              },
+              "minimum": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "rules",
+              "balance",
+              "percentage",
+              "minimum"
+            ],
+            "description": "Policy data information",
+            "example": {
+              "id": "policy_123",
+              "rules": [
+                "rule1",
+                "rule2"
+              ],
+              "balance": "1000",
+              "percentage": 50,
+              "minimum": 10
+            }
+          },
+          "attributesKP": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "listingCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "verified",
+          "volume",
+          "description",
+          "name",
+          "createdAt",
+          "updatedAt",
+          "imageUrl",
+          "_count"
+        ],
+        "description": "Response schema for a collection",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+          "verified": true,
+          "volume": "1000000",
+          "description": "A collection of Rootlets",
+          "name": "Rootlet Collection",
+          "createdAt": "2023-01-01T00:00:00.000Z",
+          "updatedAt": "2023-01-02T00:00:00.000Z",
+          "imageUrl": "https://example.com/image.png",
+          "bannerUrl": "https://example.com/banner.png",
+          "_count": {
+            "nfts": 100
+          }
+        }
+      },
+      "FindManyCollectionsDto": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "skip": {
+            "type": "number",
+            "minimum": 0
+          },
+          "orderBy": {
+            "type": "object",
+            "properties": {
+              "verified": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              },
+              "volume": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            "description": "Order by parameters for collections",
+            "example": {
+              "verified": "asc",
+              "volume": "desc"
+            }
+          },
+          "where": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "verified": {
+                "type": "boolean"
+              },
+              "skip": {
+                "type": "number"
+              }
+            },
+            "description": "Where parameters for filtering collections",
+            "example": {
+              "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+              "verified": true,
+              "skip": 0
+            }
+          },
+          "include": {
+            "type": "object",
+            "properties": {
+              "CollectionOffer": {
+                "type": "boolean"
+              }
+            },
+            "description": "Include parameters for collections",
+            "example": {
+              "CollectionOffer": true
+            }
+          }
+        },
+        "required": [
+          "limit"
+        ]
+      },
+      "FindListingsByIdDto": {
+        "type": "object",
+        "properties": {
+          "listingId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "listingId"
+        ],
+        "description": "Find listings by Id",
+        "example": {
+          "type": "0x89791879871"
+        }
+      },
+      "FindListingsByTypeDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": "Find listings by type",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet"
+        }
+      },
+      "FindOneOfferByIdDto": {
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "offerId"
+        ],
+        "description": "Find offers by offerId or tokenId",
+        "example": {
+          "offerId": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+        }
+      },
+      "FindOneOfferByTokenIdDto": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tokenId"
+        ],
+        "description": "Find offers by tokenId",
+        "example": {
+          "tokenId": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+        }
+      },
+      "FindManyOffersDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "description": "Find offers by type",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet"
+        }
+      },
+      "FindCollectionOffersDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "kioskStandard": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "kioskStandard"
+        ],
+        "description": "Find collection offers by type and kiosk standard",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet",
+          "kioskStandard": true
+        }
+      },
+      "LaunchpadFindByDto": {
+        "type": "object",
+        "properties": {
+          "launchpadId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": "Parameters to find a launchpad collection",
+        "example": {
+          "type": "0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet"
+        }
+      },
+      "LaunchpadPhaseDto": {
+        "type": "object",
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "whitelist",
+              "custom",
+              "public"
+            ]
+          }
+        },
+        "required": [
+          "phase"
+        ],
+        "description": "Launchpad phase",
+        "example": {
+          "phase": "whitelist"
+        }
+      },
+      "LaunchpadCollectionStateDto": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "Initialized",
+              "Approved",
+              "Rejected",
+              "Paused",
+              "Resumed",
+              "Pending",
+              "Completed",
+              "Active"
+            ]
+          },
+          "orderBy": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        },
+        "required": [
+          "state",
+          "orderBy"
+        ],
+        "description": "Launchpad collection state",
+        "example": {
+          "state": "Initialized",
+          "orderBy": "asc"
+        }
+      }
+    }
+  }
+}
