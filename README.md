@@ -1,4 +1,3 @@
-```markdown
 # LaunchpadSDK
 
 A TypeScript SDK for creating and managing NFT launchpads on the Sui blockchain.
@@ -7,11 +6,11 @@ A TypeScript SDK for creating and managing NFT launchpads on the Sui blockchain.
 
 - [Installation](#installation)
 - [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [API Reference](#api-reference)
+<!-- - [Quick Start](#quick-start) -->
+<!-- - [API Reference](#api-reference) -->
 - [Examples](#examples)
-- [Error Handling](#error-handling)
-- [Transaction Execution](#transaction-execution)
+<!-- - [Error Handling](#error-handling) -->
+<!-- - [Transaction Execution](#transaction-execution) -->
 
 ## Installation
 
